@@ -1,4 +1,5 @@
 import $ from "jquery";
+
 import {
   getAllTasks,
   getTaskById,
@@ -7,6 +8,8 @@ import {
   markTaskComplete,
   markTaskActive,
 } from "./requests.js";
+
+// ---- Filter and show tasklist
 
 let currentFilter = "all";
 
@@ -47,6 +50,7 @@ function updateTaskList() {
   });
 }
 
+// Eventlisteners for filter buttons
 $(document).on("click", "#btn-show-all", function () {
   currentFilter = "all";
   updateTaskList();
@@ -62,32 +66,7 @@ $(document).on("click", "#btn-show-completed", function () {
   updateTaskList();
 });
 
-//---- UPDATE TASK LIST ----
-// function updateTaskList() {
-//   getAllTasks(function (response) {
-//     var htmlString = response.tasks
-//       .map(function (task) {
-//         return (
-//           "<div class='col-12 mb-3 p-2 border rounded task d-flex justify-content-between align-items-center' data-id='" +
-//           task.id +
-//           "'> " +
-//           task.content +
-//           "<button class='btn btn-danger btn-sm float-right complete-task' data-id='" +
-//           task.id +
-//           "'>V</button>" +
-//           "<button class='btn btn-danger btn-sm float-right delete-task' data-id='" +
-//           task.id +
-//           "'>X</button>" +
-//           "</div>"
-//         );
-//       })
-//       .join("");
-//     $("#tasks").html(htmlString);
-//     console.log(response.tasks);
-//   });
-// }
-
-//---- POST NEW TASK ----
+//---- Post new task
 
 $(document).on("keypress", async (event) => {
   if (event.key === "Enter") {
@@ -105,7 +84,7 @@ $(document).on("keypress", async (event) => {
   }
 });
 
-//---- DELETE TASK ----
+//---- Delete task
 
 $(document).on("click", ".delete-task", function () {
   var id = $(this).data("id");
@@ -118,7 +97,7 @@ $(document).on("click", ".delete-task", function () {
     });
 });
 
-//---- MARK TASK AS COMPLETE OR ACTIVE ----
+//---- Mark task as complete or active
 
 $(document).on("click", ".complete-task", function () {
   var id = $(this).data("id");
@@ -148,6 +127,5 @@ $(document).on("click", ".complete-task", function () {
     });
 });
 
-//---- UPDATE COMPLETED TASK LIST ----
-
+//---- Update tasklist on load
 updateTaskList();

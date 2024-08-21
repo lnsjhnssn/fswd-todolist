@@ -6,6 +6,7 @@ $.ajaxSetup({
   },
 });
 
+// Get all tasks
 export var getAllTasks = function (successCB, errorCB) {
   var request = {
     type: "GET",
@@ -17,6 +18,7 @@ export var getAllTasks = function (successCB, errorCB) {
   $.ajax(request);
 };
 
+// Get task by id
 export var getTaskById = function (id) {
   return new Promise((resolve, reject) => {
     $.ajax({
@@ -32,6 +34,7 @@ export var getTaskById = function (id) {
   });
 };
 
+// Post new task
 export var postTask = function (content) {
   return new Promise((resolve, reject) => {
     var request = {
@@ -69,6 +72,7 @@ export var deleteTask = function (id) {
   });
 };
 
+// Mark task as complete
 export var markTaskComplete = function (id) {
   return new Promise((resolve, reject) => {
     $.ajax({
@@ -84,6 +88,7 @@ export var markTaskComplete = function (id) {
   });
 };
 
+// Mark task as active
 export var markTaskActive = function (id) {
   return new Promise((resolve, reject) => {
     $.ajax({
