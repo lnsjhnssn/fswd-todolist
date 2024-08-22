@@ -1,5 +1,4 @@
 import $ from "jquery";
-
 import {
   getAllTasks,
   getTaskById,
@@ -19,7 +18,32 @@ function filterTasks(tasks, filter) {
   } else if (filter === "completed") {
     return tasks.filter((task) => task.completed);
   } else {
-    return tasks; // Return all tasks
+    return tasks;
+  }
+}
+
+// Update button styles depending on filter
+function updateFilterButtons() {
+  $("#btn-show-all").removeClass("btn-dark").addClass("btn-outline-secondary");
+  $("#btn-show-active")
+    .removeClass("btn-dark")
+    .addClass("btn-outline-secondary");
+  $("#btn-show-completed")
+    .removeClass("btn-dark")
+    .addClass("btn-outline-secondary");
+
+  if (currentFilter === "all") {
+    $("#btn-show-all")
+      .removeClass("btn-outline-secondary")
+      .addClass("btn-dark");
+  } else if (currentFilter === "active") {
+    $("#btn-show-active")
+      .removeClass("btn-outline-secondary")
+      .addClass("btn-dark");
+  } else if (currentFilter === "completed") {
+    $("#btn-show-completed")
+      .removeClass("btn-outline-secondary")
+      .addClass("btn-dark");
   }
 }
 
@@ -27,30 +51,33 @@ function filterTasks(tasks, filter) {
 function updateTaskList() {
   getAllTasks(function (response) {
     const filteredTasks = filterTasks(response.tasks, currentFilter);
-    // Render the filtered tasks (this part remains similar to updateTaskList)
     const htmlString = filteredTasks
       .map(function (task) {
+        const taskClass = task.completed ? "text-decoration-line-through" : "";
         return (
-          "<div class='col-12 mb-3 p-2 border rounded task d-flex justify-content-between align-items-center' data-id='" +
+          "<div class='col-12 my-2 d-flex justify-content-between align-items-center " +
+          taskClass +
+          "' data-id='" +
           task.id +
-          "'> " +
+          "'>" +
           task.content +
-          "<button class='btn btn-danger btn-sm float-right complete-task' data-id='" +
+          "<div><button class='btn btn-outline btn-sm complete-task' data-id='" +
           task.id +
-          "'>V</button>" +
-          "<button class='btn btn-danger btn-sm float-right delete-task' data-id='" +
+          "'>[done]</button>" +
+          "<button class='ms-4 btn btn-outline btn-sm float-right delete-task' data-id='" +
           task.id +
-          "'>X</button>" +
+          "'>[delete]</button></div>" +
           "</div>"
         );
       })
       .join("");
     $("#tasks").html(htmlString);
+    updateFilterButtons();
     console.log(response.tasks);
   });
 }
 
-// Eventlisteners for filter buttons
+// Event listeners for filter buttons
 $(document).on("click", "#btn-show-all", function () {
   currentFilter = "all";
   updateTaskList();
@@ -67,7 +94,6 @@ $(document).on("click", "#btn-show-completed", function () {
 });
 
 //---- Post new task
-
 $(document).on("keypress", async (event) => {
   if (event.key === "Enter") {
     const taskContent = $("#task-input").val().trim();
@@ -85,7 +111,6 @@ $(document).on("keypress", async (event) => {
 });
 
 //---- Delete task
-
 $(document).on("click", ".delete-task", function () {
   var id = $(this).data("id");
   deleteTask(id)
@@ -98,7 +123,6 @@ $(document).on("click", ".delete-task", function () {
 });
 
 //---- Mark task as complete or active
-
 $(document).on("click", ".complete-task", function () {
   var id = $(this).data("id");
 
