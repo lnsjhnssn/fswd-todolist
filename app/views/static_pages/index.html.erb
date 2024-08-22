@@ -1,21 +1,27 @@
 <%= javascript_pack_tag 'index', 'data-turbolinks-track': 'reload' %>
 
-<div class="container">
+
+<div class="container my-5" style="max-width: 600px;">
   <div class="row">
     <div class="col-12">
-      <h1 class="text-center mt-4">To Do</h1>
-     
-      <div class="d-flex justify-content-between my-5">
-        <input type="text" id="task-input" placeholder="Enter a new task">
-         <div>
-        <button id="btn-show-active">active</button>
-        <button id="btn-show-completed">completed</button>
-        <button id="btn-show-all">all</button>
+      <div class="d-flex justify-content-between">
+      <h1 class="my-5">TODO</h1>
+      <div class="my-5 d-flex justify-content-end align-items-center">
+        <button id="btn-show-active" class="btn-sm">[active]</button>
+        <button id="btn-show-completed" class="btn-sm mx-1">[completed]</button>
+        <button id="btn-show-all" class="btn-sm">[all]</button>
       </div>
       </div>
       <div class="row" id="tasks">
+          <div>
+            <button class="btn btn-sm btn-outline-secondary mx-1">Edit</button>
+            <button class="btn btn-sm btn-outline-secondary mx-1">Delete</button>
+          </div>
+        </div>
       </div>
-      
+      <div>
+        <input type="text" id="task-input" placeholder="Enter a new task" class="form-control w-100 mx-auto mt-5">
+      </div>
     </div>
   </div>
 </div>
